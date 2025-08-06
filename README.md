@@ -8,17 +8,18 @@
 
 </div>
 
-This is an implementation of the paper [Blind2Unblind: Self-Supervised Image Denoising with Visible Blind Spots](https://arxiv.org/abs/2203.06967) with [Jittor](https://github.com/Jittor/jittor).
+This is an navie implementation of the paper [Blind2Unblind: Self-Supervised Image Denoising with Visible Blind Spots](https://arxiv.org/abs/2203.06967) with [Jittor](https://github.com/Jittor/jittor). Each epoch with 400 samples for training. If enough gpu sources, you can change create_dataloader function's argument max_samples.
 
 
 ## ⚙️ Installation under Linux
 You should firstly ensure Nvidia CUDA >= 10.0 and g++ >= 5.4.
 
-Install jittor:
+Install and config for jittor:
 ```bash
 sudo apt install python3.8-dev libomp-dev
 python3.8 -m pip install jittor
 python3.8 -m jittor.test.test_example
+export cc_path="g++"
 ```
 
 Then you still need to install other libraries.
