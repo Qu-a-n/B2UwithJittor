@@ -98,13 +98,19 @@ python test_jt.py --noisetype gauss25 --checkpoint pretrained/B2U_epochs15_jt.pk
 </div>
 
 ## Performance Jittor vs Pytorch
-* PSNR & SSIM
+You can get the log analysis by log_analysis.py:
+```
+python log_analysis.py --train_log_path [] --valid_log_path []
+```
+where train_log_path will return loss curve and valid_log_path will return following matrics for pretrained model.
+
+### PSNR & SSIM
 
 <div align="center">
   <img src="assets/performance.png" alt="performance" style="width: 80%; height: auto;">
 </div>
 
-* Case Study
+### Case Study
 
 <div align="center">
   <img src="assets/kodak23.png" alt="kodak_case" style="width: 80%; height: auto;">
