@@ -8,64 +8,95 @@
 
 </div>
 
-This is an implementation of the paper [Blind2Unblind: Self-Supervised Image Denoising with Visible Blind Spots](https://arxiv.org/abs/2203.06967).
+This is an implementation of the paper [Blind2Unblind: Self-Supervised Image Denoising with Visible Blind Spots](https://arxiv.org/abs/2203.06967) with [Jittor](https://github.com/Jittor/jittor).
 
-## 📰 News
 
-- We plan to refactor this repository into a foundational codebase suitable for building more general reasoning frameworks, including stable LLM calls and more user-friendly and readable logging. Stay tuned for updates!
+## ⚙️ Installation under Linux
+You should firstly ensure Nvidia CUDA >= 10.0 and g++ >= 5.4.
 
-- We're thrilled by the amazing community response to our [post](https://x.com/didiforx/status/1895902471635288252) (390k+ Views) and grateful for all the engaging discussions.
-
-## 📖 Overview
-
-Atom of Thoughts (AoT) is a new reasoning framework that represents the solution as a composition of atomic questions. This approach transforms the reasoning process into a Markov process with atomic states, where state transitions use a two-phase mechanism: first decomposing the current question into a temporary dependency-based directed acyclic graph, then contracting its subquestions to form a new atomic question state. AoT significantly enhances large language models' performance on reasoning tasks while reducing computational waste. Additionally, these atomic states enable AoT to function as a plugin for existing test-time scaling methods, allowing for flexible integration that combines the strengths of different approaches.
-
-**Key Features:**
-
-- **General Reasoning Capability**: Works across diverse reasoning scenarios including math, multi-choice, and multi-hop QA with the same codebase, differentiated only by task-specific prompts
-- **Plug-in Enhancement**: Can be integrated with existing test-time scaling methods to improve their performance
-- **Resource Efficiency**: Focuses computational resources on effective reasoning rather than processing historical information
-
-## ⚙️ API Configuration Setup
-
-Before using the Atom of Thoughts (AoT) framework, you need to set up your API key and URL:
-
-1. Create an `apikey.py` file in the project root directory with the following format:
-
+Install jittor:
+```bash
+sudo apt install python3.8-dev libomp-dev
+python3.8 -m pip install jittor
+python3.8 -m jittor.test.test_example
 ```
-url = "https://api.openai.com/v1"  # Replace with your API endpoint
-api_key = [
-    "your-api-key-here",  # Replace with your actual API key
-    # You can add multiple API keys to improve concurrency performance.
-]
+
+Then you still need to install other libraries.
+```bash
+pip install -r requirements_jt.txt
+```
+
+We also have a pytorch version from the [official implementation](https://github.com/zejinwang/Blind2Unblind), directly execute:
+```bash
+pip install -r requirements.txt
+```
+
+
+## Command Arguments
+* For train:
+```
+--noisetype: str, in 'gauss25', 'gauss5_50', 'poisson30', 'poisson5_50'
+--train_dir: str, your dataset for training
+--validation_dir: str, your dataset for validation
+--resume: str, the filepath for optimizer etc. to resume states
+--checkpoint: str, the model path you have trained for some epoches
+--n_epoch: int, training epoches
+--n_snapshot: int, the epoch gap for saving model checkpoint
+```
+
+* For test:
+```
+--noisetype: str, in 'gauss25', 'gauss5_50', 'poisson30', 'poisson5_50'
+--checkpoint: str, the path for your pretrained model
+--test_dirs: str, your dataset for test
+```
+
+## Prepare Dataset
+* Download ImageNet Dataset for training (official implementation only use ImageNet Validation Dataset for training, ~50000 pngs):
+```
+cd dataset
+aria2c -x 16 -s 16 'http://academictorrents.com/download/5d6d0df7ed81efd49ca99ea4737e0ae5e3a5f2e5.torren'
 ```
 
 ## 🚀 Quick Start
 
-### Atom Mode: Using AoT as a reasoning method
-
-Evaluate the performance of AoT on a specific dataset:
+Train model with Jittor:
 
 ```bash
-python main.py --dataset math --start 0 --end 10 --model gpt-4o-mini
+python train_jt.py --noisetype gauss25 --n_epoch 15 --n_snapshot 1
 ```
 
-### Command Arguments
+Test model with Jittor:
 
-- `--dataset`: Choose from `math`, `gsm8k`, `bbh`, `mmlu`, `hotpotqa`, or `longbench`
-- `--start` and `--end`: Specify the range of examples to evaluate (e.g., 0-10 for first 10 examples)
-- `--model`: Model name of the LLM to use
-- `--mode`: Choose between `atom` (main experiment) or `plugin` (generate contracted dataset)
+```bash
+python test_jt.py --noisetype gauss25 --checkpoint pretrained/B2U_epochs15_jt.pkl
+```
 
-The `plugin` mode enables AoT to serve as a preprocessing step that generates contracted questions which can then be fed into other reasoning frameworks. This approach combines the benefits of AoT's atomic state representation with other test-time scaling methods, allowing the contracted questions to maintain answer equivalence with the original questions while eliminating unnecessary historical information.
+## Training loss
 
-## 📝 Citation
+
+<div align="center">
+  <div style="display: inline-block; margin: 10px;">
+    <img src="assets/epoch_diff_jt.png" alt="Image 1" style="width: 40%; height: auto;">
+    <p style="text-align: center;">Jittor version</p>
+  </div>
+  <div style="display: inline-block; margin: 10px;">
+    <img src="assets/epoch_diff.png" alt="Image 2" style="width: 40%; height: auto;">
+    <p style="text-align: center;">pytorch version</p>
+  </div>
+</div>
+
+
+
+## 📝 Citation the official paper
 
 ```bibtex
-@article{teng2025atom,
-  title={Atom of Thoughts for Markov LLM Test-Time Scaling},
-  author={Teng, Fengwei and Yu, Zhaoyang and Shi, Quan and Zhang, Jiayi and Wu, Chenglin and Luo, Yuyu},
-  journal={arXiv preprint arXiv:2502.12018},
-  year={2025}
+@InProceedings{Wang_2022_CVPR,
+    author    = {Wang, Zejin and Liu, Jiazheng and Li, Guoqing and Han, Hua},
+    title     = {Blind2Unblind: Self-Supervised Image Denoising With Visible Blind Spots},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2022},
+    pages     = {2027-2036}
 }
 ```
