@@ -57,6 +57,16 @@ pip install -r requirements.txt
 cd dataset
 aria2c -x 16 -s 16 'http://academictorrents.com/download/5d6d0df7ed81efd49ca99ea4737e0ae5e3a5f2e5.torren'
 ```
+  Check dataset:
+```
+md5sum ILSVRC2012_img_val.tar ILSVRC2012_img_train.tar
+29b22e2961454d5413ddabcf34fc5622 ILSVRC2012_img_val.tar
+```
+  Unzip dataset
+```
+mkdir train
+tar -xvf ILSVRC2012_img_val.tar -C train
+```
 
 ## 🚀 Quick Start
 
@@ -85,6 +95,12 @@ python test_jt.py --noisetype gauss25 --checkpoint pretrained/B2U_epochs15_jt.pk
     <p style="text-align: center;">pytorch version</p>
   </div>
 </div>
+
+## Performance Jittor vs Pytorch
+* PSNR & SSIM
+
+
+* Case Study
 
 
 
