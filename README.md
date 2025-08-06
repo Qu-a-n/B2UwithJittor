@@ -99,6 +99,9 @@ python test_jt.py --noisetype gauss25 --checkpoint pretrained/B2U_epochs15_jt.pk
 ## Performance Jittor vs Pytorch
 * PSNR & SSIM
 
+<div align="center">
+  <img src="assets/performance.png" alt="performance" style="width: 80%; height: auto;">
+</div>
 
 * Case Study
 
