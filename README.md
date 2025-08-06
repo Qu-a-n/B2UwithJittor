@@ -107,7 +107,7 @@ python test_jt.py --noisetype gauss25 --checkpoint pretrained/B2U_epochs15_jt.pk
 * Case Study
 
 <div align="center">
-  <img src="assets/Kodak23.png" alt="kodak_case" style="width: 80%; height: auto;">
+  <img src="assets/kodak23.png" alt="kodak_case" style="width: 80%; height: auto;">
 </div>
 <div align="center">
   <img src="assets/bsd300017.png" alt="bsd_case" style="width: 80%; height: auto;">
