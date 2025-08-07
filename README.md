@@ -60,7 +60,7 @@ aria2c -x 16 -s 16 'http://academictorrents.com/download/5d6d0df7ed81efd49ca99ea
 ```
   Check dataset:
 ```
-md5sum ILSVRC2012_img_val.tar ILSVRC2012_img_train.tar
+md5sum ILSVRC2012_img_val.tar
 29b22e2961454d5413ddabcf34fc5622 ILSVRC2012_img_val.tar
 ```
   Unzip dataset
@@ -102,7 +102,7 @@ You can get the log analysis by log_analysis.py:
 ```
 python log_analysis.py --train_log_path [] --valid_log_path []
 ```
-where train_log_path will return loss curve and valid_log_path will return following matrics for pretrained model.
+where train_log_path will return loss curve and valid_log_path will return following metrics for pretrained model.
 
 ### PSNR & SSIM
 
